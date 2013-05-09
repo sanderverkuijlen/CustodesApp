@@ -1,0 +1,26 @@
+﻿<section>
+    <header>
+        <h1>Custodes</h1>
+    </header>
+    <article>
+        <div>
+            <div>
+                <form name="loginForm" ng-submit="login(email, password)" novalidate>
+
+                    <label>E-mail</label><br>
+                    <input type="email" name="email" placeholder="example@example.com" ng-model="email" required><br>
+                    <div class="error" ng-show="loginForm.email.$error.required && loginForm.email.$dirty">Required</div>
+                    <div class="error" ng-show="loginForm.email.$error.email && loginForm.email.$dirty">Must be a valid e-mailadress</div>
+                    <br>
+                            
+                    <label>Password</label><br>
+                    <input type="text" name="password" ng-model="password" required><br>
+                    <div class="error" ng-show="loginForm.password.$error.required && loginForm.password.$dirty">Required</div>
+                    <br>
+                            
+                    <button type="submit" ng-disabled="loginForm.$invalid">Login</button>
+                </form>
+            </div>
+        </div>
+    </article>
+</section>
