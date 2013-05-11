@@ -1,8 +1,8 @@
 ﻿<section>
     <header>
-        <a href="#/list" class="left icon-chevron-left"></a>
-
-        <a href="javascript:" class="right icon-th-large" ng-click="logout()"></a>
+        <button ng-click="go('list')">back</button>
+        <button ng-click="edit()">edit</button>
+        <button ng-click="delete()">delete</button>
     </header>
 
     <article>
@@ -11,35 +11,27 @@
                 <form name="editForm" ng-submit="save()" novalidate>
 
                     <label>Name</label><br>
-                    <input type="text" name="name" ng-model="credential.Name" required><br>
-                    <div class="error" ng-show="editForm.name.$error.required && editForm.name.$dirty">Required</div>
+                    {{credential.name}}
 
                     <br>
 
                     <label>Login</label><br>
-                    <input type="text" name="login" ng-model="credential.Login" required><br>
-                    <div class="error" ng-show="editForm.login.$error.required && editForm.login.$dirty">Required</div>
+                    {{credential.login}}
 
                     <br>
 
                     <label>Password</label><br>
-                    <input type="text" name="password" ng-model="credential.Password" required><br>
-                    <div class="error" ng-show="editForm.password.$error.required && editForm.password.$dirty">Required</div>
+                    {{credential.password}}
 
                     <br>
 
                     <label>Group</label><br>
-                    <input type="text" name="group" ng-model="credential.GroupName" required><br>
-                    <div class="error" ng-show="editForm.group.$error.required && editForm.group.$dirty">Required</div>
+                    {{credential.groupname}}
 
                     <br>
 
-                    <label>Favourite</label><br>
-                    <input type="checkbox" name="favourite" ng-model="credential.IsFavorite"><br>
-
-                    <button type="submit">Save</button>
-                    <button ng-click="new();">New</button>
-                    <button ng-click="delete();">Delete</button>
+                    <label>Favorite</label><br>
+                    {{credential.isfavorite}}
 
                 </form>
             </div>

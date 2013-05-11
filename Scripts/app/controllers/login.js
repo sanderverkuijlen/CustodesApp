@@ -1,7 +1,6 @@
+app.controller('LoginCtrl', function LoginCtrl($scope){
 
-app.controller('LoginCtrl', function LoginCtrl($scope) {
-
-  $scope.email = 'sander@gmail.com';
-  $scope.password = 'sander';
+  $scope.email = 'koen@gmail.com';
+  $scope.password = 'koen';
 
 });

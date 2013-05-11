@@ -1,59 +1,35 @@
-﻿app.controller('DetailCtrl', function DetailCtrl($scope, Credential, $location, $routeParams) {
+﻿app.controller('DetailCtrl', function DetailCtrl($scope, Credential, $routeParams){
 
   //Vars
-  if ($routeParams.credentialId > 0) {
-    $scope.credential = Credential.get({ id: $routeParams.credentialId });
+  if($routeParams.credentialId > 0){
+    $scope.credential = Credential.getDecrypt({ id: $routeParams.credentialId });
   }
-  else {
-    $scope.credential = new Credential();
+  else{
+    $scope.go('list');
   }
-
-  console.log($scope.credential);
-
 
   //Functions
-  $scope.new = function() {
-    $location.path('/credential/new');
+  $scope.edit = function (){
+
+    $scope.go('credential/' + $scope.credential.id + '/edit');
   };
-  $scope.save = function() {
-    //Create
-    if ($scope.credential.Id === undefined) {
+  $scope.delete = function (){
 
-      $scope.credential.create(function() {
-        $location.path('/list');
-      });
-    }
-    //Update
-    else {
-
-      $scope.credential.update(function() {
-        $location.path('/list');
-      });
-    }
-  }
-
-  $scope.openDeleteDialog = function(){
-    //TODO: open delete dialog
-  }
-  $scope.delete = function() {
-
-    console.log($scope.credential);
-
-    $scope.credential.remove(function() {
-      $location.path('/list');
+    $scope.credential.destroy(function (){
+      $scope.go('list');
     });
-  }
+  };
 
 
   //Events
   /*$scope.$on('login', function(event, message) {
-    $scope.credentials = Credential.query(function(credentials) {
-      $scope.credential = new Credential(credentials[0]);
-      $scope.isViewLoading = false;
-    });
-  });*/
+   $scope.credentials = Credential.query(function(credentials) {
+   $scope.credential = new Credential(credentials[0]);
+   $scope.isViewLoading = false;
+   });
+   });*/
 
-  $scope.$on('logout', function(event, message) {
+  $scope.$on('logout', function (event, message){
 
     $scope.credential = new Credential();
   });

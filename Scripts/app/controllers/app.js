@@ -1,38 +1,43 @@
-app.controller('AppCtrl', function AppCtrl($scope, Authentication, $location) {
+app.controller('AppCtrl', function AppCtrl($scope, Authentication, $location){
 
   $scope.loading = false;
 
-  $scope.loadStart = function() {
+  $scope.loadStart = function (){
     $scope.loading = true;
-  }
+  };
 
-  $scope.loadStop = function() {
+  $scope.loadStop = function (){
     $scope.loading = false;
-  }
+  };
 
-  $scope.login = function(email, password) {
+  $scope.go = function (route){
+
+    $location.path(route);
+  };
+
+  $scope.login = function (email, password){
 
     //TODO: show loader
 
-    Authentication.login(email, password, function(succes, data, status, headers, config) {
+    Authentication.login(email, password, function (succes, data, status, headers, config){
 
       //TODO: hide dialog
 
-      if(succes) {
-        $location.path('/list');
+      if(succes){
+        $scope.go('list');
       }
-      else {
+      else{
         //TODO: show error stuff here
       }
     });
-  }
+  };
 
-  $scope.logout = function() {
+  $scope.logout = function (){
 
     Authentication.logout();
 
     $scope.$broadcast('logout', {});
 
-    $location.path('/');
+    $scope.go('');
   }
 });

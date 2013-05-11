@@ -1,0 +1,49 @@
+﻿<section>
+    <header>
+        <button ng-click="save()">save</button>
+        <button ng-click="discard();">discard</button>
+    </header>
+
+    <article>
+        <div>
+            <div>
+                <form name="editForm" novalidate>
+
+                    <label>Name</label><br>
+                    <input type="text" name="name" ng-model="credential.name" required><br>
+
+                    <div class="error" ng-show="editForm.name.$error.required && editForm.name.$dirty">Required</div>
+
+                    <br>
+
+                    <label>Login</label><br>
+                    <input type="text" name="login" ng-model="credential.login" required><br>
+
+                    <div class="error" ng-show="editForm.login.$error.required && editForm.login.$dirty">Required</div>
+
+                    <br>
+
+                    <label>Password</label><br>
+                    <input type="text" name="password" ng-model="credential.password" required><br>
+
+                    <div class="error" ng-show="editForm.password.$error.required && editForm.password.$dirty">
+                        Required
+                    </div>
+
+                    <br>
+
+                    <label>Group</label><br>
+                    <input type="text" name="group" ng-model="credential.groupname" required><br>
+
+                    <div class="error" ng-show="editForm.group.$error.required && editForm.group.$dirty">Required</div>
+
+                    <br>
+
+                    <label>Favorite</label><br>
+                    <input type="checkbox" name="favorite" ng-model="credential.isfavorite"><br>
+
+                </form>
+            </div>
+        </div>
+    </article>
+</section>

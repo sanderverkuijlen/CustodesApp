@@ -135,21 +135,13 @@ body{
 			z-index:			1;
 			border-bottom:		1px solid #91aebc;
 
-			a{
+			button{
+				display:			inline-block;
 				position:           relative;
 				z-index:			1;
-				display:            block;
 				width:              50px;
 				text-decoration:	none;
 				font-size:          18px;
-
-				&.left{
-					float:              left;
-				}
-
-				&.right{
-					float:              right;
-				}
 
 				&:hover,&:active,&:focus{
 					color:				@header_text_focus;
@@ -174,9 +166,10 @@ body{
 
 			> ul{
 				height:             100%;
-				float:              left;
+				//float:              left;
 				list-style:         none;
-				width:              40%;
+				//width:              40%;
+				width:				100%;
 				padding:            0;
 				margin:             0;
 				overflow-y:         scroll;
@@ -259,10 +252,10 @@ body{
 				}
 			}
 
-			ul + div{
+			/*ul + div{
 				float:              right;
 				width:              60%;
-			}
+			}*/
 
 
 
@@ -299,7 +292,7 @@ footer nav{
 }
 
 /* Tablet (landscape, widescreen) - 1024px up to 1366px */
-@media only screen and (max-width: 1366px){
+/*@media only screen and (max-width: 1366px){
 
 	#page,
 	footer nav{
@@ -307,7 +300,7 @@ footer nav{
 	}
 }
 
-/* Tablet (landscape) - 768px up to 1024px */
+/* Tablet (landscape) - 768px up to 1024px *
 @media only screen and (max-width: 1024px){
 
 	#page,
@@ -335,7 +328,7 @@ footer nav{
 	}
 }
 
-/* Tablet (portrait) - 480px up to 768px */
+/* Tablet (portrait) - 480px up to 768px *
 @media only screen and (max-width: 768px){
 
 	#page,
@@ -344,7 +337,7 @@ footer nav{
 	}
 }
 
-/* Phones - anything smaller than 480px*/
+/* Phones - anything smaller than 480px*
 @media only screen and (max-width: 480px){
 
 	#page,
@@ -364,4 +357,4 @@ footer nav{
 			.animate(page_out_backward, linear, 0.2s, 0s, forwards);
 		}
 	}
-}
+}*/

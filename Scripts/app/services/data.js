@@ -1,46 +1,77 @@
 angular.module('dataService', ['ngResource']).
-    factory('Credential', function($resource) {
+    factory('Credential', function ($resource, $rootScope, Authentication) {
 
-      var self = this;
+      //var self = this;
 
-      var Credential = $resource('http://localhost:49708\:49708/api/credential/:id',
+      var Credential = $resource('http://custodes.sa-ve.net/api/public/credential/:id',
           { apiKey: '4f847ad3e4b08a2eed5f3b54' }, {
             create: { method: 'POST' },
             update: { method: 'PUT' }
           }
       );
 
-      Credential.prototype.query = function(cb) {
-        console.log(cb);
+      Credential.queryDecrypt = function (cb) {
+        Credential.query(function (results) {
 
-        return Credential.query({}, this, cb);
+          for (var i = 0; i < results.length; i++) {
+            results[i].name = CryptoJS.AES.decrypt(results[i].name, Authentication.requestPassword()).toString(CryptoJS.enc.Utf8);
+            results[i].login = CryptoJS.AES.decrypt(results[i].login, Authentication.requestPassword()).toString(CryptoJS.enc.Utf8);
+            results[i].password = CryptoJS.AES.decrypt(results[i].password, Authentication.requestPassword()).toString(CryptoJS.enc.Utf8);
+          }
+
+          cb(results);
+        });
       };
 
-      Credential.prototype.create = function(cb) {
+
+      Credential.getDecrypt = function (params) {
+        return Credential.get(params, function (result) {
+          result.name = CryptoJS.AES.decrypt(result.name, Authentication.requestPassword()).toString(CryptoJS.enc.Utf8);
+          result.login = CryptoJS.AES.decrypt(result.login, Authentication.requestPassword()).toString(CryptoJS.enc.Utf8);
+          result.password = CryptoJS.AES.decrypt(result.password, Authentication.requestPassword()).toString(CryptoJS.enc.Utf8);
+        });
+      };
+
+      Credential.prototype.createEncrypt = function (cb) {
+        var encrypted = CryptoJS.AES.encrypt(this.name, Authentication.requestPassword());
+        this.name = encrypted.toString();
+        encrypted = CryptoJS.AES.encrypt(this.login, Authentication.requestPassword());
+        this.login = encrypted.toString();
+        encrypted = CryptoJS.AES.encrypt(this.password, Authentication.requestPassword());
+        this.password = encrypted.toString();
         return Credential.create({}, this, cb);
       };
 
-      Credential.prototype.update = function(cb) {
-        return Credential.update({ id: this.Id }, this, cb);
-      };
-
-      Credential.prototype.remove = function(cb) {
-        return Credential.remove({ id: this.Id }, this, cb);
+      Credential.prototype.updateEncrypt = function (cb) {
+        var encrypted = CryptoJS.AES.encrypt(this.name, Authentication.requestPassword());
+        this.name = encrypted.toString();
+        encrypted = CryptoJS.AES.encrypt(this.login, Authentication.requestPassword());
+        this.login = encrypted.toString();
+        encrypted = CryptoJS.AES.encrypt(this.password, Authentication.requestPassword());
+        this.password = encrypted.toString();
+        return Credential.update({ id: this.id }, this, cb);
       };
 
       Credential.prototype.destroy = function (cb) {
-        return Credential.remove({ id: this.Id }, this, cb);
+        return Credential.remove({ id: this.id }, this, cb);
       };
 
       return Credential;
     }).
     factory('Authentication', function($http) {
 
+      var self = this;
+
       var authorized = false;
+      self.unencryptedPasswordKey = null;
 
       this.isAuthorized = function() {
         return authorized;
-      }
+      };
+
+      this.requestPassword = function () {
+        return self.unencryptedPasswordKey;
+      };
 
       this.login = function(email, password, callback) {
 
@@ -50,10 +81,11 @@ angular.module('dataService', ['ngResource']).
         $http.defaults.headers.common['Custodes-Email']     = hashedEmail;
         $http.defaults.headers.common['Custodes-Password']  = hashedPassword;
 
-        $http({ method: 'GET', url: 'http://localhost:49708/api/authentication' }).
+        $http({ method: 'GET', url: 'http://custodes.sa-ve.net/api/public/authentication' }).
           success(function(data, status, headers, config) {
 
             authorized = true;
+            self.unencryptedPasswordKey = password;
             callback(true, data, status, headers, config);
           }).
           error(function(data, status, headers, config) {
@@ -65,10 +97,9 @@ angular.module('dataService', ['ngResource']).
 
       this.logout = function() {
         authorized = false;
-
-        delete $http.defaults.headers.common['Custodes-Email'];
-        delete $http.defaults.headers.common['Custodes-Password'];
-      }
+        $http.defaults.headers.common['Custodes-Email'] = '';
+        $http.defaults.headers.common['Custodes-Password'] = '';
+      };
 
       return this;
     });

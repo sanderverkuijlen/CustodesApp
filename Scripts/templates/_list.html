@@ -1,15 +1,17 @@
 ﻿<section>
     <header>
-        <a href="javascript:" class="right icon-th-large" ng-click="logout()"></a>
+        <button ng-click="go('credential/new')">new</button>
+        <button ng-click="refresh()">refresh</button>
+        <button ng-click="logout()">logout</button>
     </header>
 
     <article>
         <ul>
             <li ng-repeat="group in groups">
                 <h2>{{group.name}}</h2>
-                <a ng-repeat="credential in group.credentials" href="#/credential/{{credential.Id}}">
-                    <b>{{credential.Name}}</b>
-                    <small>{{credential.Login}}</small>
+                <a ng-repeat="credential in group.credentials" href="#/credential/{{credential.id}}">
+                    <b>{{credential.name}}</b>
+                    <small>{{credential.login}}</small>
                 </a>
             </li>
         </ul>
