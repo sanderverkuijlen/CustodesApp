@@ -1,9 +1,9 @@
 angular.module('dataService', ['ngResource']).
-    factory('Credential', function ($resource, $rootScope, Authentication) {
+    factory('Credential', function ($resource, $rootScope, Authentication, MainSettings) {
 
       //var self = this;
 
-      var Credential = $resource('http://custodes.sa-ve.net/api/public/credential/:id',
+      var Credential = $resource(MainSettings.connStrings.credentialConnString,
           { apiKey: '4f847ad3e4b08a2eed5f3b54' }, {
             create: { method: 'POST' },
             update: { method: 'PUT' }
@@ -58,7 +58,7 @@ angular.module('dataService', ['ngResource']).
 
       return Credential;
     }).
-    factory('Authentication', function($http) {
+    factory('Authentication', function ($http, MainSettings) {
 
       var self = this;
 
@@ -81,7 +81,7 @@ angular.module('dataService', ['ngResource']).
         $http.defaults.headers.common['Custodes-Email']     = hashedEmail;
         $http.defaults.headers.common['Custodes-Password']  = hashedPassword;
 
-        $http({ method: 'GET', url: 'http://custodes.sa-ve.net/api/public/authentication' }).
+        $http({ method: 'GET', url: MainSettings.connStrings.authenticationConnString }).
           success(function(data, status, headers, config) {
 
             authorized = true;

@@ -1,4 +1,4 @@
-app.controller('ListCtrl', function ListCtrl($scope, Credential){
+app.controller('ListCtrl', function ListCtrl($scope, Credential) {
 
   //Vars
   $scope.groups = [];
@@ -7,7 +7,6 @@ app.controller('ListCtrl', function ListCtrl($scope, Credential){
     $scope.credentials = credentials;
     $scope.groupCredentials();
   });
-
 
   //Functions
   $scope.groupCredentials = function (){
